@@ -20,9 +20,14 @@ This guide will help you set up and enable the necessary components based on you
 |---------------------------------|--------------------------------------|
 | [Deno](#deno) (recommended)     | Enabled by default.                  |
 | [Node](#node)                   | Enable with `--js-runtimes node`     |
-| [Bun](#bun)                     | Enable with `--js-runtimes bun`      |
 | [QuickJS](#quickjs--quickjs-ng) | Enable with `--js-runtimes quickjs`  |
+| [Bun](#bun) (deprecated)        | Enable with `--js-runtimes bun`      |
 
+The JavaScript runtime executable should be located within your `PATH` (or located in the same folder as your `yt-dlp.exe` if you are on Windows). Otherwise, you'll need to specify the path to the JS runtime executable (or its containing folder) in your `--js-runtimes` argument, e.g.:
+
+```
+--js-runtimes "deno:/path/to/deno"
+```
 
 ### deno
 
@@ -33,7 +38,7 @@ https://deno.com
 
 #### Installation instructions
 
-Minimum supported version: `2.0.0`
+Minimum supported version: `2.3.0`
 
 Download from https://docs.deno.com/runtime/getting_started/installation/ or from your package manager.
 
@@ -56,7 +61,7 @@ https://nodejs.org
 
 #### Installation instructions
 
-Minimum supported version: `20.0.0`
+Minimum supported version: `22.0.0`
 
 Download from https://nodejs.org/en/download/ or from your package manager.
 
@@ -75,9 +80,16 @@ It is recommended to add this to your [yt-dlp configuration file](https://github
 
 https://bun.com
 
+> [!WARNING]
+> Support for `bun` is deprecated!
+>
+> Versions after `1.3.14` are not supported, and support may be dropped entirely in the future.
+
 #### Installation instructions
 
-Minimum supported version: `1.0.31`
+Minimum supported version: `1.2.11`
+
+Latest supported version: `1.3.14`
 
 Download from https://bun.com/docs/installation or from your package manager.
 
@@ -119,6 +131,7 @@ It is recommended to add this to your [yt-dlp configuration file](https://github
 - QuickJS versions prior to `2025-4-26` are missing optimizations which can lead to execution times of several minutes.
 - QuickJS-NG versions prior to `0.12.0 `are missing optimizations which can lead to execution times of several minutes.
 - Both QuickJS and QuickJS-NG do not fully allow executing files from stdin, so yt-dlp will create temporary files for each EJS script execution. This can theoretically lead to time-of-check to time-of-use (TOCTOU) vulnerabilities.
+- The filename of the executable must be `qjs` (or `qjs.exe` on Windows), or else the path to *the executable file* must be specified in the `--js-runtimes` argument.
 
 
 ## Step 2: Install EJS challenge solver scripts (yt-dlp-ejs)
